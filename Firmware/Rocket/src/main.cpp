@@ -69,6 +69,12 @@ void setup() {
     Serial2.begin(115200, SERIAL_8N1, RX2_PIN, TX2_PIN); 
     Serial2.setTimeout(20); 
     delay(1500); 
+
+    // Check for necessary configuration files
+    if (!checkConfigurationFiles()) {
+        Serial.println("Configuration files missing. Aborting setup.");
+        return;
+    }
     Wire.begin(21, 22);
     if (mpu.begin()) {
         mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
