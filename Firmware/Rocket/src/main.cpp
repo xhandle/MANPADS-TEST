@@ -89,6 +89,12 @@ void setup() {
     upServo.write(UP_CENTER);
     downServo.write(DOWN_CENTER);
     calibrateGyro();
+    // Check if MPU6050 initialized correctly
+    if (!mpu.begin()) {
+        Serial.println("MPU6050 initialization failed!");
+        while (true); // Halt execution
+    }
+
 }
 
 void loop() {
