@@ -89,6 +89,17 @@ class TelemetryApp:
         
         ttk.Label(control_frame, text="Status:", font=self.f(10, "bold")).pack(side=tk.LEFT)
         self.status_label = ttk.Label(control_frame, text="Connecting to Launcher AP...", foreground="red", font=self.f(10))
+    def validate_telemetry_data(self, data):
+        # Implement validation logic to check if data matches required operating conditions
+        return True  # Placeholder for actual validation logic
+
+    def update_telemetry(self, data):
+        if self.validate_telemetry_data(data):
+            # Proceed with updating telemetry state
+            self.current_values.update(data)
+        else:
+            # Handle the case where telemetry data is invalid
+            print("Received invalid telemetry data.")
         self.status_label.pack(side=tk.LEFT, padx=self.s(10))
 
         scale_frame = ttk.Frame(control_frame)
