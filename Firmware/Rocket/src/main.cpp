@@ -70,11 +70,14 @@ void setup() {
     Serial2.setTimeout(20); 
     delay(1500); 
 
-    // Check for necessary configuration files
-    if (!checkConfigurationFiles()) {
-        Serial.println("Configuration files missing. Aborting setup.");
+    // Safety check for leftServo
+    if (LEFT_CENTER < 0 || LEFT_CENTER > 180) {
+        Serial.println("Error: LEFT_CENTER position is out of bounds.");
         return;
     }
+
+
+    // Check for necessary configuration files
     Wire.begin(21, 22);
     if (mpu.begin()) {
         mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
