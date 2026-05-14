@@ -58,6 +58,12 @@ class TelemetryApp:
         
         self.gui_update_loop()
 
+    def connection_watchdog(self):
+        while self.running:
+            if self.current_values["State"] != "CONNECTED":
+                self.handle_connection_issue()
+            time.sleep(1)  # Check every second
+
     def s(self, val): return int(val * self.ui_scale)
     def f(self, size, weight="normal"): return ("Helvetica", self.s(size), weight)
     def fm(self, size): return ("Courier New", self.s(size), "bold")
@@ -89,6 +95,13 @@ class TelemetryApp:
         
         ttk.Label(control_frame, text="Status:", font=self.f(10, "bold")).pack(side=tk.LEFT)
         self.status_label = ttk.Label(control_frame, text="Connecting to Launcher AP...", foreground="red", font=self.f(10))
+    def validate_send_command(self, command):
+        # Placeholder for command validation logic
+        return command is not None and command != ""
+
+        if not self.validate_send_command(command):
+            print("Invalid send command. Command not sent to dashboard.")
+            return
 
         # Validate telemetry data before proceeding
         if not self.validate_telemetry_data():
