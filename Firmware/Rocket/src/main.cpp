@@ -76,6 +76,12 @@ void setup() {
         return;
     }
 
+    // Safety check for Serial2 data
+    if (Serial2.available() == 0) {
+        Serial.println("Error: No data available on Serial2.");
+        return;
+    }
+
 
     // Check for necessary configuration files
     Wire.begin(21, 22);
